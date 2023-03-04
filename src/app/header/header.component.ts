@@ -10,8 +10,6 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   constructor(private router: Router) {}
   logout() {
-    // Perform logout actions here, such as removing the user data from local storage
-    // localStorage.removeItem('userData');
 
     window.location.reload()
     this.router.navigate(['/login']);

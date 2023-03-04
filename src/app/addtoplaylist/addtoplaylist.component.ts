@@ -1,7 +1,10 @@
+import { LoginService } from './../service/login.service';
+import { PlaylistService } from './../service/playlist.service';
 
 import { track } from './../model/track';
 import { Component, OnInit } from '@angular/core';
 import { MusicserviceService } from '../service/musicservice.service';
+import { Playlists, Tracks } from '../model/sample';
 
 @Component({
   selector: 'app-addtoplaylist',
@@ -9,64 +12,75 @@ import { MusicserviceService } from '../service/musicservice.service';
   styleUrls: ['./addtoplaylist.component.css']
 })
 export class AddtoplaylistComponent implements OnInit {
-  tracks: track[] = [];
+
+
+
+  tracks: Playlists[] = [];
+  emp: Tracks= {};
+
   audioObj: HTMLAudioElement | null = null;
   progress = '0%';
   Url: string | undefined;
   isPlaying = false;
+  isClicked: any;
+  trackId: string | undefined;
+  trackName: string | undefined;
+  selectedPlaylist: any;
 
-  constructor(private music: MusicserviceService) {}
+
+
+  constructor(private music: MusicserviceService,private plays:PlaylistService,private log:LoginService) {}
 
   ngOnInit(): void {
-    this.tracks = this.music.tracks;
-    this.Url = this.music.track.musicPath;
-  }
-
-  addto() {
-    this.tracks.push(this.music.track);
-  }
 
 
-  play(index: number) {
-    if (this.audioObj) {
-      this.audioObj.pause();
-      this.audioObj = null;
-    }
+    this.plays.getPlaylist(this.log.userName).subscribe({
+      next:data=>{
+        this.tracks = data;
+        console.log(data);
 
-    this.audioObj = new Audio(this.tracks[index].musicPath);
-    this.audioObj.play();
-    this.isPlaying = true;
-    this.Url = this.tracks[index].musicPath;
-  }
-  pause() {
-    if (this.audioObj) {
-      this.audioObj.pause();
-      this.isPlaying = false;
-    }
+      },error:err=>{
+        alert("Playlist not fetched ")
+      }
+    });
   }
 
 
+  ngOnChanges() {
+    console.log(this.emp);
+    this.Url = this.emp?.musicPath;
+    this.trackId = this.emp?.trackId;
+    this.trackName = this.emp?.trackName;
 
-   skipToPosition(event: MouseEvent) {
-    if (this.audioObj) {
-      const progressElement = event.currentTarget as HTMLElement;
-      const rect = progressElement.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const width = rect.width;
-      const percent = x / width;
-      const newTime = this.audioObj.duration * percent;
-      this.audioObj.currentTime = newTime;
-    }
+
   }
-  delete(track: any) {
-    const index = this.tracks.indexOf(track);
-    if (index !== -1) {
-      this.tracks.splice(index, 1);
-    }
+event(){
+  if(this.isClicked){
+    this.isClicked=false;
   }
-
-
+  else{
+    this.isClicked=true;
+  }
 }
+
+playSong() {
+  if (this.audioObj && !this.audioObj.paused) {
+    this.audioObj.pause();
+    return;
+  }
+  this.audioObj = new Audio(this.Url);
+  this.audioObj.play();
+  this.audioObj.addEventListener('timeupdate', () => {
+    const duration = this.audioObj?.duration || 0;
+    const currentTime = this.audioObj?.currentTime || 0;
+    const progress = currentTime / duration * 100;
+    this.progress = `${progress}%`;
+  });
+}
+}
+
+
+
 
 
 

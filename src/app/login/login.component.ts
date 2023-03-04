@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Token } from '@angular/compiler';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../model/Customer';
 import { Login, LoginService } from '../service/login.service';
@@ -14,6 +14,10 @@ import { Login, LoginService } from '../service/login.service';
 export class LoginComponent {
   loginForm: FormGroup;
   employee = {} as Login;
+
+  showPassword = false;
+  // password: AbstractControl | undefined;
+  // passwordChecker(formData:AbstractControl)
 
 
 
@@ -33,22 +37,32 @@ get password(){
 }
 
 
-  onSubmit() {
-    if(this.loginForm.invalid){
-      alert('Please fill all required fields with valid data.');
-      return;
-    }
-    else{
-    this.log.verifyLogin(this.loginForm.value).subscribe(data => {
-      sessionStorage.setItem('Token',JSON.stringify(data));
-      this.log.isLoggedIn=true;
-      this.router.navigate(['/music']);
+onSubmit() {
 
-    },error => {
-      alert ("wrong userid and password");
-    })
-}
+
+  this.log.userName = this.loginForm.value.userId;
+  console.log(this.log.userName)
+
+  if (this.loginForm.invalid) {
+    alert('Please fill all required fields with valid data.');
+    return;
+  } else {
+    this.log.verifyLogin(this.loginForm.value).subscribe(
+      (data) => {
+        localStorage.setItem('Token', JSON.stringify(data));
+        this.log.isLoggedIn = true;
+        this.router.navigate(['/music']);
+      },
+      (error) => {
+        alert('Wrong userid and password');
+      }
+    );
   }
+}
+
+toggleShowPassword() {
+  this.showPassword = !this.showPassword;
+}
 
 }
 

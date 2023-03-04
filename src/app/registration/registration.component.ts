@@ -24,11 +24,11 @@ export class RegistrationComponent {
   constructor (private fb: FormBuilder,private _snackBar: MatSnackBar,private customer:RegistrationService ,private router: Router,private log:LoginService){
     this.profileForm = this.fb.group({
 
-      name:new FormControl('',[Validators.required]),
-      email:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/)]),
-      phoneNo:new FormControl('',[Validators.required,Validators.pattern(/^[7-9]\d{9}$/)]),
+      name:new FormControl('',[Validators.required,Validators.minLength(3)]),
+      email:new FormControl('',[Validators.required ,Validators.required, Validators.pattern(/^[a-zA-Z0-9.! #$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.com$/)]),
+      phoneNo:new FormControl('',[Validators.required,Validators.pattern(/^[7-9]\d{9}$/),Validators.minLength(10)]),
       password:new FormControl('',[Validators.required,Validators.minLength(8),Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/)]),
-      userId:new FormControl('',[Validators.required]),
+      userId:new FormControl('',[Validators.required,Validators.minLength(3)]),
 
 
 
@@ -82,7 +82,7 @@ export class RegistrationComponent {
     if (c.value !== '') {
       const emailString = c.value;
       const emails = emailString.split(',').map((e: string) => e.trim());
-      const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,}\.com)$/i;
       const anyInvalidEmail = emails.every((e: string) => e.match(emailRegex) !== null);
       if (!anyInvalidEmail) {
         return { checkIfGuestEmailsAreValid: false }
@@ -90,6 +90,7 @@ export class RegistrationComponent {
     }
     return null;
   }
+
 
 
 

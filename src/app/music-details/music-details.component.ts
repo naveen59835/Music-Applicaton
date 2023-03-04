@@ -3,6 +3,8 @@ import { MusicserviceService } from './../service/musicservice.service';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { User } from '../model/Customer';
 import { Song } from '../model/song';
+import { Tracks, User1 } from '../model/sample';
+import { AudioService } from '../service/audio.service';
 
 @Component({
   selector: 'app-music-details',
@@ -13,8 +15,8 @@ export class MusicDetailsComponent implements OnInit {
   //@output event emitter
 
 
-  constructor(private music:MusicserviceService) {}
-
+  constructor(private music:MusicserviceService, private audio:AudioService) {}
+  emp:Tracks[]=[];
   musics: User[] = [];
   music2: User = {};
   songUrl = '../assets/song/rolex-bgm.wav';
@@ -24,10 +26,12 @@ export class MusicDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.music.getEmployeesList().subscribe({
+
+    this.audio.getEmployeesList().subscribe({
       next: data => {
-        this.musics = data;
-        console.log(this.musics);
+        this.emp = data;
+
+        console.log(this.emp);
       },
       error: err => {
         alert("Something went wrong!! data not fetched");

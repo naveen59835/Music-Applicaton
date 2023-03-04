@@ -29,6 +29,8 @@ import { AddtoplaylistComponent } from './addtoplaylist/addtoplaylist.component'
 import { ImageViewComponent } from './image-view/image-view.component';
 import {MatCardModule} from '@angular/material/card';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CreatePlaylistComponent } from './create-playlist/create-playlist.component';
+import { RouterModule, Routes } from '@angular/router';
 
 
 
@@ -44,7 +46,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     NotfoundComponent,
     MusicComponent,
     AddtoplaylistComponent,
-    ImageViewComponent
+    ImageViewComponent,
+    CreatePlaylistComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ Ng2SearchPipeModule,
     MatSelectModule,
     MatInputModule,
     MatSidenavModule,
+    
 
 
   ],

@@ -20,7 +20,7 @@ export class MusicserviceService {
 
   constructor(private httpClient:HttpClient) { }
   getEmployeesList(): Observable <User[]>{
-        const requestHeader=new HttpHeaders().set('authorization','Bearer' + window.sessionStorage.getItem('Token'));
+        const requestHeader=new HttpHeaders().set('authorization','Bearer' + window.localStorage.getItem('Token'));
 
     return this.httpClient.get<User[]>(this.URL,{'headers':requestHeader});
 

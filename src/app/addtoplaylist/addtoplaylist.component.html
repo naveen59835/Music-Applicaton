@@ -1,36 +1,29 @@
-<h2>Add to Playlist</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Track ID</th>
-      <th>Track Name</th>
-      <th>Artist Name</th>
-      <th>Duration</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let track of tracks">
-      <td>{{ track.trackId }}</td>
-      <td>{{ track.trackName }}</td>
-      <td>{{ track.artistName }}</td>
-      <td>{{ track.duration }}</td>
-      <td>
-<div class="progress-bar">
-          <div class="progress" [style.width]="progress + '%'"></div>
-        </div>
-        <button (click)="delete(track)">Delete</button>
-      </td>
-    </tr>
-    <div *ngFor="let track of tracks; let i = index">
-
-      <button (click)="play(i)">Play</button>
-      <button *ngIf="isPlaying" (click)="pause()">Pause</button>
-
-    </div>
-  </tbody>
-</table>
+  <div *ngFor="let playlist of tracks" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 10px; width: 70%; text-align: center; display: flex; flex-direction: column; align-items: center;" >
+    <h1 style="margin: 0; font-weight: bolder;">Playlist ID:{{playlist.playlistId}}</h1>
+    <button class="my-button" (click)="selectedPlaylist = (selectedPlaylist === playlist) ? null : playlist">
+      {{ (selectedPlaylist === playlist) ? 'Hide Tracks' : 'View Tracks' }}
+    </button>
+    <span *ngIf="selectedPlaylist === playlist">
+      <table>
+        <thead>
+          <tr>
+            <th>Song ID</th>
+            <th>Song Name</th>
+            <th>Artist</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let song of playlist.tracks">
+            <td>{{ song.trackId }}</td>
+            <td>{{ song.trackName }}</td>
+            <td>{{ song.artistName }}</td>
+            <td>{{ song.duration }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+  </div>
 
 
 

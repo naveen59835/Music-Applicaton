@@ -6,7 +6,10 @@
               <mat-label>Name</mat-label>
               <input matInput placeholder="Name" formControlName="name">
               <span *ngIf="name?.errors?.['required']">
-                Name is required</span>
+                Name is required </span>
+                <span *ngIf="name?.errors?.['minlength']">
+                  name must be at least 3 characters long
+                </span>
               <mat-hint>Name</mat-hint>
             </mat-form-field>
 
@@ -18,7 +21,10 @@
                 phone number is required
               </span>
               <span *ngIf="phoneNo?.errors?.['pattern']">
-                pattern is starting with 7 8 9
+                Phone Number should start with 7,8,9
+              </span>
+              <span *ngIf="phoneNo?.errors?.['minlength']">
+                PhoneNo must be at least 10 characters long
               </span>
 
               <mat-hint>phone</mat-hint>
@@ -30,7 +36,7 @@
           <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
           <span *ngIf="email?.errors?.['required']">Email required</span>
           <span *ngIf="email?.errors?.['pattern']">
-           pattern not matching
+           Email should have '@' and should be ending with '.com'
           </span>
 
 
@@ -60,10 +66,13 @@
         <mat-form-field appearance="fill" style="position: relative;left: 100px;">
           <mat-label>userid</mat-label>
           <input matInput placeholder="USERID" type="text" formControlName="userId">
-        
+
           <span *ngIf="userId?.invalid && userId?.touched">
             <span *ngIf="userId?.errors?.['required']">
               UserId is required</span>
+              <span *ngIf="userId?.errors?.['minlength']">
+                userId must be at least 3 characters long
+              </span>
             </span>
 
 

@@ -1,8 +1,11 @@
 import { Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Component } from '@angular/core';
 import { User } from '../model/Customer';
+import { Tracks, User1 } from '../model/sample';
 import { track } from '../model/track';
+import { LoginService } from '../service/login.service';
 import { MusicserviceService } from '../service/musicservice.service';
+import { PlaylistService } from '../service/playlist.service';
 
 @Component({
   selector: 'app-music',
@@ -10,34 +13,32 @@ import { MusicserviceService } from '../service/musicservice.service';
   styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnChanges {
-
-  // searchText: string = '';
   progress = '0%';
   trackId: string | undefined;
   trackName: string | undefined;
-  constructor(private music:MusicserviceService) {}
+  constructor(private music:MusicserviceService,private play:PlaylistService,private log:LoginService) {}
 
-  @Input('musicone') musics: User = {};
+  @Input('musicone') emp: Tracks= {};
   audioObj: HTMLAudioElement | null = null;
   Url: string | undefined;
-  // track: track = {};
-  //  tracks: track[] = [];
+
   searchTerm: string = '';
   filteredTracks: track[] = [];
   showForm: boolean = false;
-  playlists: string[] = ['Favorites', 'Party', 'Chill'];
+
   selectedPlaylist: string = '';
   newPlaylist: string ='';
+  isClicked: boolean = false;
+  playlistId:string='';
+  playlistName:string='';
+  data:any ;
 
+ngOnChanges() {
+    console.log(this.emp);
+    this.Url = this.emp?.musicPath;
+    this.trackId = this.emp?.trackId;
+    this.trackName = this.emp?.trackName;
 
-
-
-
-  ngOnChanges() {
-    // this.artistName = this.musics.trackList?.map(track => track.artistName) || [];
-    this.Url = this.musics.trackList?.musicPath;
-    this.trackId = this.musics.trackList?.trackId;
-    this.trackName = this.musics.trackList?.trackName;
 
   }
 
@@ -52,7 +53,7 @@ export class MusicComponent implements OnChanges {
         this.progress = `${progress}%`;
       });
 
-      // output track info to console when playing starts
+
       console.log(`Playing track ${this.trackId}: ${this.trackName}`);
     } else if (this.audioObj.paused) {
       this.audioObj.play();
@@ -73,33 +74,28 @@ export class MusicComponent implements OnChanges {
     }
   }
 
-addto(){
-  const track = {
-    artistName: this.musics.trackList?.artistName,
-    duration: this.musics.trackList?.duration,
-    musicPath: this.musics.trackList?.musicPath,
-    trackId: this.musics.trackList?.trackId,
-    trackName: this.musics.trackList?.trackName
-  };
-alert("Successfully added to Playlist");
-  this.music.tracks.push(track);
-  console.log('Added track:', track);
-  console.log('All tracks:', this.music.tracks);
+
+addSong(){
+
+  this.play.addSong(this.playlistId,this.emp.trackId,this.log.userName,this.data).subscribe({
+    next:data=>{
+      alert("song added to playlist");
+      console.log(data);
+    },error:err=>{
+      alert("Error adding song");
+    }
+  })
 }
-addToPlaylist() {
-  if (this.newPlaylist) {
-    this.playlists.push(this.newPlaylist);
-    this.selectedPlaylist = this.newPlaylist;
+onClick(){
+
+  if(this.isClicked){
+    this.isClicked=false;
   }
-  // Add song to selected playlist
-  console.log(`Adding song to playlist ${this.selectedPlaylist}`);
-  // Reset form
-  this.showForm = false;
-  this.newPlaylist = '';
+  else{
+    this.isClicked=true;
+  }
+
 }
-
-
-
 
 }
 

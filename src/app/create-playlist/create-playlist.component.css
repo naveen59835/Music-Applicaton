@@ -1,0 +1,35 @@
+.custom-button {
+  background-color: #f1c40f;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-button:hover {
+  background-color: #e67e22;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field label {
+  font-size: 18px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #00bcd4;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  color: #00bcd4;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  border-color: #00bcd4;
+}
+

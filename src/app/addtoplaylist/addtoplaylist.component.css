@@ -43,3 +43,70 @@ th {
   height: 100%;
   transition: width 0.2s ease-in-out;
 }
+
+
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.playlists {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.playlist {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 70%;
+}
+
+.playlist-heading {
+  margin: 0;
+}
+
+.song-list {
+  display: none;
+  margin-top: 10px;
+}
+
+.song {
+  margin: 0;
+}
+
+.view-button {
+  margin-top: 20px;
+}
+button.custom-button {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  font-weight: bold;
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+}
+.my-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+

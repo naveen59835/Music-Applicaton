@@ -1,6 +1,8 @@
 <div class="container col-md-6">
   <h2 style="color:red">Login Form</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+  <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" > -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
     <div class="mb-3">
       <label for="userId" class="form-label">User ID</label>
       <input type="text" class="form-control" id="userId" formControlName="userId">
@@ -8,13 +10,25 @@
        User Id is required</span>
 
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="password" class="form-label">Password:</label>
       <input type="password" class="form-control" id="password" formControlName="password">
       <span *ngIf="password?.errors?.['required']">
         password is required</span>
+    </div> -->
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password:</label>
+      <div class="input-group">
+        <input type="{{showPassword ? 'text' : 'password'}}" class="form-control" id="password" formControlName="password">
+        <button class="btn btn-outline-secondary" type="button" (click)="toggleShowPassword()">
+          <i class="{{showPassword ? 'far fa-eye-slash' : 'far fa-eye'}}"></i>
+        </button>
+      </div>
+      <span *ngIf="password?.errors?.['required']">password is required</span>
     </div>
-    <!-- <button type="submit" class="btn btn-primary">Login</button> -->
+
+
     <button class="material-symbols-outlined" type="submit">
       login
     </button>

@@ -13,6 +13,7 @@ export type Login = {
 
 
 export class LoginService {
+  userName: string='';
   isLoggedIn: boolean = false;
 
   private URL = "http://localhost:9999/api/v1/checkauth";

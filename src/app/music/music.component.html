@@ -1,27 +1,25 @@
-<!-- <button (click)="playSong()">{{ audioObj && !audioObj.paused ? 'Pause' : 'Play' }}</button>
-<div class="progress">
-  <div class="progress-bar" [style.width]="progress" style="width:100%;"></div>
-</div> -->
-<!-- <div class="search-hero">
-  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for a hero by id or name or country">
-</div> -->
-
-
-
 <div>
 
-<div *ngIf="musics?.trackList">
-  <h1>Song Name :{{ musics.trackList?.trackName }}</h1>
-  <h3>Track ID: {{ musics.trackList?.trackId }}</h3>
-  <p>Artist Name :{{musics.trackList?.artistName}}</p>
-  <p>Duration :{{musics.trackList?.duration}}</p>
+<div *ngIf="emp.musicPath">
+  <h1>Song Name :{{ emp.trackName }}</h1>
+  <h3>Track ID: {{ emp.trackId }}</h3>
+  <p>Artist Name :{{emp.artistName}}</p>
+  <p>Duration :{{emp.duration}}</p>
 
   <button (click)="playSong()" class="btn btn-primary">
     <i *ngIf="!audioObj || audioObj.paused" class="fa fa-play"></i>
     <i *ngIf="audioObj && !audioObj.paused" class="fa fa-pause"></i>
   </button>
-  <button mat-button class="btn-btn" (click)="addto()" style="background-color: violet; color: white; font-weight: bold;">Add to Playlist</button>
-
+  <button mat-button class="btn-btn" (click)="onClick()" style="background-color: violet; color: white; font-weight: bold;">Add to Playlist</button>
+           <span *ngIf="isClicked" class="playlist-form">
+            <div class="playlist-form">
+              <mat-form-field class="example-full-width" style="width: 100%;">
+                <mat-label>playlist ID</mat-label>
+                <input matInput type="text" [(ngModel)]="playlistId">
+              </mat-form-field>
+              <button mat-button class="btn-btn" (click)="addSong()" style="background-color: rgb(78, 195, 219); color: white; font-weight: bold;">Add Song</button>
+            </div>
+    </span>
 
   <div class="progress mt-3" (click)="skipToPosition($event)">
     <div class="progress-bar" role="progressbar" [style.width]="progress"
@@ -33,6 +31,8 @@
 
 
 </div>
+
+
 
 
 

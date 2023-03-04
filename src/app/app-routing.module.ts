@@ -10,6 +10,8 @@ import { ActivateGuard } from './guards/activate.guard';
 import { DeactivateGuard } from './guards/deactivate.guard';
 import { DeactivateguardGuard } from './guards/deactivateguard.guard';
 import { ImageViewComponent } from './image-view/image-view.component';
+import { CreatePlaylistComponent } from './create-playlist/create-playlist.component';
+
 
 const routes: Routes = [
   {path:"home", component: HomeComponent},
@@ -17,14 +19,20 @@ const routes: Routes = [
   {path:"registration",component:RegistrationComponent,canDeactivate:[DeactivateguardGuard]},//candeactivate
   {path:"music",component:MusicDetailsComponent, canActivate:[ActivateGuard]},//canactivate
   {path:"playlist",component:AddtoplaylistComponent,  canActivate:[ActivateGuard]},//canactivate
+  {path:"newPlaylist",component:CreatePlaylistComponent,canActivate:[ActivateGuard]},
   {path:"sample",component:ImageViewComponent},
   {path:"", redirectTo:"/home",pathMatch:'full'},
   {path:"**", component: NotfoundComponent},
 
+
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+
+  @NgModule({
+    imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+    exports: [RouterModule]
+  })
+  export class AppRoutingModule { }
+
+
+
